@@ -1,0 +1,98 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    padding: 15px 30px;
+    color: white;
+    width: 100%; /* Ensure navbar stretches across the top */
+    position: fixed; /* Fix navbar at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar .logo h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.navbar nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 35px;
+    display:flex;
+}
+
+.navbar nav ul li {
+    margin: 0 15px;
+}
+
+.navbar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.navbar nav ul li a:hover {
+    color: #ff9800;
+}
+
+/* Fix Position of Admin Login Box */
+.login-container {
+    width: 350px;
+    height: 300px;
+    padding: 50px 30px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.login-container h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+input[type="email"], input[type="password"] {
+    width: 90%;
+    padding: 10px 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+label{
+    font-size: 400;
+}
+
+button {
+    margin-top: 10px;
+    width: 97%;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+     background-color: #ff9900;
+}
+

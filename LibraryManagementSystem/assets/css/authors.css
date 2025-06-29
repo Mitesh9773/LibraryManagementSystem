@@ -1,0 +1,61 @@
+/* Limit Action column width */
+th:nth-child(3), td:nth-child(3) {
+    width: 150px;
+    text-align: center;
+}
+
+/* Button Container */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between buttons */
+}
+
+/* Edit & Delete Buttons */
+.edit-btn, .delete-btn {
+    padding: 3px 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    width: 75px; /* Same width */
+    height: 30px; /* Same height */
+    text-align: center;
+    line-height: 30px;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+.edit-btn {
+    padding: 4px 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    width: 75px; /* Same width */
+    height: 30px; /* Same height */
+    text-align: center;
+    line-height: 30px;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}

@@ -1,0 +1,330 @@
+<?php
+include '../includes/db.php';
+
+// Handle adding a new author
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_author'])) {
+    $author_name = mysqli_real_escape_string($conn, $_POST['author_name']);
+
+    if (!empty($author_name)) {
+        $query = "INSERT INTO authors (name) VALUES ('$author_name')";
+        if (mysqli_query($conn, $query)) {
+            echo "<script>alert('Author added successfully!'); window.location.href='add_authors.php';</script>";
+        } else {
+            echo "<script>alert('Error adding author');</script>";
+        }
+    } else {
+        echo "<script>alert('Author name cannot be empty!');</script>";
+    }
+}
+
+// Handle deleting an author
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_author'])) {
+    $author_id = $_POST['author_id'];
+    $query = "DELETE FROM authors WHERE author_id = '$author_id'";
+
+    if (mysqli_query($conn, $query)) {
+        echo "<script>alert('Author deleted successfully!'); window.location.href = 'add_authors.php';</script>";
+    } else {
+        echo "<script>alert('Error deleting author');</script>";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Authors</title>
+    <link rel="stylesheet" href="../assets/css/authors.css">
+    <script defer src="../assets/js/authors.js"></script>
+
+    <style>
+        /* Limit Action column width */
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 150px;
+            text-align: center;
+        }
+        /* Limit Action column width */
+        /* General Styles */
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #222;
+    color: white;
+    height: 100vh;
+    padding-top: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px 20px;
+    border-bottom: 1px solid #333;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li:hover {
+    background: #444;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 270px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Container for form and table */
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Form Container */
+.form-container {
+    width: 40%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-right: 20px;
+    margin-left: -20px;
+}
+
+.form-container h2 {
+    text-align: center;
+}
+
+.form-container input {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+/* Table Container */
+.table-container {
+    width: 55%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.table-container h2 {
+    text-align: center;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #f4f4f4;
+}
+        /* Button Container */
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            /* Space between buttons */
+        }
+
+        /* Edit & Delete Buttons */
+        .edit-btn,
+        .delete-btn {
+            padding: 3px 8px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            width: 75px;
+            /* Same width */
+            height: 30px;
+            /* Same height */
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .edit-btn {
+            padding:4px 0px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            width: 70px;
+            /* Same width */
+            height: 30px;
+            /* Same height */
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .delete-btn {
+            padding: 5px 10px;
+            width: 70px;
+            height: 38px;
+
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>LMS</h2>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="add_book.php">Add a Book</a></li>
+            <li><a href="view_books.php">View Books</a></li>
+            <li><a href="add_authors.php">Manage Authors</a></li>
+            <li><a href="add_categories.php">Manage Categories</a></li>
+            <li><a href="manage_users.php">Manage Users</a></li>
+            <li><a href="admin_manage_requests.php">Borrow Requests</a></li>
+            <li><a href="issued_books.php">Issued Books</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>Manage Authors</h1>
+
+        <div class="container">
+            <!-- Add Author Form -->
+            <div class="form-container">
+                <h2>Add Author</h2>
+                <form id="add-author-form" method="POST">
+                    <!-- <label for="author_name">Author Name:</label> -->
+                    <input type="text" id="author_name" name="author_name" placeholder="Enter Author Name" required>
+                    <button type="submit" name="add_author" class="btn ">Add Author</button>
+                </form>
+            </div>
+
+            <!-- Author List -->
+            <div class="table-container">
+                <h2>List of Authors</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Author Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query = "SELECT * FROM authors";
+                        $result = mysqli_query($conn, $query);
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>
+                                    <td>{$row['author_id']}</td>
+                                    <td>{$row['name']}</td>
+                                    <td>
+                                        <div class='action-buttons'>
+                                            <a href='manage_authors.php?id={$row['author_id']}' class='edit-btn'>Edit</a>
+                                            <form method='POST' class='delete-form'>
+                                                <input type='hidden' name='author_id' value='{$row['author_id']}'>
+                                                <button type='submit' name='delete_author' class='delete-btn'>Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                  </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
